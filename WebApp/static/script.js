@@ -1,8 +1,8 @@
 var mousePressed = false;
-var x, y;
+var Lastx, Lasty;
 var ctx;
 
-function init() {
+function Init() {
     ctx = document.getElementById('canvas').getContext("2d");
 
     $('#canvas').mousedown(function (e) {
@@ -27,13 +27,15 @@ function init() {
     function Draw(x, y, isDown) {
         if(isDown) {
             ctx.beginPath();
+            ctx.strokeStyle = $('#Color').val();
+            ctx.lineWidth = $('#Width').val();
             ctx.lineJoin = "round";
-            ctx.moveTo(lastX, lastY);
+            ctx.moveTo(Lastx, Lasty);
             ctx.lineTo(x, y);
             ctx.closePath();
             ctx.stroke();
         }
-        lastX = x; lastY = y;
+        Lastx = x; Lasty= y;
     }
     
     function clearArea(){
