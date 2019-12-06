@@ -24,23 +24,23 @@ function Init() {
         mousePressed = false;
     });
 
-    function Draw(x, y, isDown) {
-        if(isDown) {
-            ctx.beginPath();
-            ctx.strokeStyle = $('#Color').val();
-            ctx.lineWidth = $('#Width').val();
-            ctx.lineJoin = "round";
-            ctx.moveTo(Lastx, Lasty);
-            ctx.lineTo(x, y);
-            ctx.closePath();
-            ctx.stroke();
-        }
-        Lastx = x; Lasty= y;
+}
+
+function Draw(x, y, isDown) {
+    if(isDown) {
+        ctx.beginPath();
+        ctx.strokeStyle = $('#Color').val();
+        ctx.lineWidth = $('#Width').val();
+        ctx.lineJoin = "round";
+        ctx.moveTo(Lastx, Lasty);
+        ctx.lineTo(x, y);
+        ctx.closePath();
+        ctx.stroke();
     }
-    
-    function clearArea(){
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    }
-    
+    Lastx = x; Lasty= y;
+}
+
+function clearArea() {
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
 }
