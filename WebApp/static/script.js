@@ -48,5 +48,5 @@ function clearArea() {
 function submit(){
     canvas = document.getElementById("canvas");
     console.log(canvas.toDataURL());
-    $.post("uploadimage", {"theimage": canvas.toDataURL})
+    $.post("uploadimage", {"theimage": canvas.toDataURL()})
 }

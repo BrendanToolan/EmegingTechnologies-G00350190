@@ -1,7 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import base64
 import numpy as np
 import keras as kr
+import flask as fl
+
 
 app = Flask(__name__)
 
@@ -16,7 +18,7 @@ if __name__ == "__main__":
 
 @app.route('/uploadimage', methods =['GET', 'POST'])
 def uploadimage():
-    theimage = (flask.request.get("theimage",""))
+    theimage = (fl.request.values.get("theimage",""))
     print(theimage)
     decodedimg = base64.b64decode(theimage[22:])
     with open("theimage.png", "wb") as f:
