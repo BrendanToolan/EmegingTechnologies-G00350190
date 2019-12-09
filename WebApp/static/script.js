@@ -29,8 +29,8 @@ function Init() {
 function Draw(x, y, isDown) {
     if(isDown) {
         ctx.beginPath();
-        ctx.strokeStyle = $('#Color').val();
-        ctx.lineWidth = $('#Width').val();
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 10;
         ctx.lineJoin = "round";
         ctx.moveTo(Lastx, Lasty);
         ctx.lineTo(x, y);
