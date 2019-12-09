@@ -44,3 +44,9 @@ function clearArea() {
     ctx.setTransform(1,0,0,1,0,0);
     ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
 }
+
+function submit(){
+    canvas = document.getElementById("canvas");
+    console.log(canvas.toDataURL());
+    $.post("uploadimage", {"theimage": canvas.toDataURL})
+}
