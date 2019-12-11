@@ -4,7 +4,7 @@ var ctx;
 
 function Init() {
     ctx = document.getElementById('canvas').getContext("2d");
-
+    
     $('#canvas').mousedown(function (e) {
         mousePressed = true;
         Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top,
@@ -29,7 +29,7 @@ function Init() {
 function Draw(x, y, isDown) {
     if(isDown) {
         ctx.beginPath();
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "white";
         ctx.lineWidth = 10;
         ctx.lineJoin = "round";
         ctx.moveTo(Lastx, Lasty);
@@ -48,7 +48,7 @@ function clearArea() {
 //j query 
 function submit(){
     var canvas = document.getElementById("canvas");
-    console.log(canvas.toDataURL());
+  //  console.log(canvas.toDataURL());
     var dataURL = canvas.toDataURL();
     console.log(dataURL);
 
