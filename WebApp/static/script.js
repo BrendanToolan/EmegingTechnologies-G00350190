@@ -45,8 +45,29 @@ function clearArea() {
     ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
 }
 
+//j query 
 function submit(){
+    var canvas = document.getElementById("canvas");
+    console.log(canvas.toDataURL());
+    var dataURL = canvas.toDataURL();
+    console.log(dataURL);
+
+    $.post("predict", {"theimage": canvas.toDataURL()})
+
+    $.ajax({
+        type: "POST",
+        url: "/predict",
+        data: {
+            imgBase64: dataURL
+        }
+    }).done(function(result){
+        console.log('SENT' + result);
+        $("#result").empty().append(result);
+    });
+};
+
+/*function submit(){
     canvas = document.getElementById("canvas");
     console.log(canvas.toDataURL());
-    $.post("uploadimage", {"theimage": canvas.toDataURL()})
-}
+    $.post("predict", {"theimage": canvas.toDataURL()})
+}*/
