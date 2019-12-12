@@ -20,8 +20,8 @@
       <button onclick="submit()">Make Prediction</button>
       <button onclick="clearArea(); return false;">Clear Area</button>
 
-     
-        <h4 id="predictedNum"></h4>
+      <h3>Predicted Digit</h3>
+      <h4 id="predictedNum"></h4>
       
       <!--Line width : <select id = "width">
         <option value="5" selected="selected">5</option>
@@ -81,6 +81,7 @@
     function clearArea() {
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+      $("#predictedNum").text('');
     }
 
     function submit(){
