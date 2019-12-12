@@ -4,85 +4,59 @@
 from flask import Flask, render_template, request
 import base64
 import numpy as np
-from tensorflow.keras.models import load_model
+import keras as ks
+#from keras.models import load_model
 import flask as fl
 from PIL import Image, ImageOps
 import cv2
 import tensorflow as tf
 
-app = Flask(__name__)
-model = load_model('model.h5')
 
-height=28
-width=28
+app = Flask(__name__)
+model = ks.models.load_model('model.h5')
+
+height = 28
+width = 28
 size = height, width
+
+graph = tf.get_default_graph()
 
 @app.route('/')
 def home():
     return render_template('homepage.html')
 
-#Code used to save the canvas a png image
-#@app.route('/uploadimage', methods =['GET', 'POST'])
-#def uploadimage():
-#    theimage = (fl.request.values.get("theimage",""))
- #   print(theimage)
-  #  decodedimg = base64.b64decode(theimage[22:])
-   # with open("theimage.png", "wb") as f:
-    #    f.write(decodedimg)
-    
-    #return {"message": theimage}
-
 @app.route('/predict', methods=['POST'])
 def predict():
 
-    encodedImg = fl.request.values[('imgBase64')]
-    decodedImg = base64.b64decode(encodedImg[22:])
-    with open('theimage.png', 'wb') as f:
-        f.write(decodedImg)
+    global graph
+    with graph.as_default():
+        encodedImg = fl.request.values[('imgBase64')]
+        decodedImg = base64.b64decode(encodedImg[22:])
 
-    #size=28,28
-    image = Image.open("theimage.png")
-    resizedImg = ImageOps.fit(image, size, Image.ANTIALIAS)
-    resizedImg.save("resizedImage.png")
-    resizedImg = cv2.imread('resizedImage.png')
-    grayScaleImg = cv2.cvtColor(resizedImg, cv2.COLOR_BGR2GRAY)
-    grayScaleArray = np.array(grayScaleImg, dtype=np.float32).reshape(1, 784)
-    grayScaleArray /= 255
+        with open('theimage.png', 'wb') as f:
+            f.write(decodedImg)
 
-    setPredict = model.predict(grayScaleArray)
-    getPredict = np.array(setPredict[0])
+        image = Image.open("theimage.png")
 
-    predictedNum = str(np.argmax(getPredict))
-    print(predictedNum)
-    return predictedNum
+        resizedImg = ImageOps.fit(image, size, Image.ANTIALIAS)
+        resizedImg.save("resizedImage.png")
 
-  #  theimage = (fl.request.values.get("theimage",""))
-  #  print(theimage)
-  #  decodedimg = base64.b64decode(theimage[22:])
-  #  with open("theimage.png", "wb") as f:
-  #      f.write(decodedimg)
-    
-  #  return {"message": theimage}
+        newImg = cv2.imread("resizedImage.png")
 
-  #  parseImg(request.get.data())
+        grayScaleImage = cv2.cvtColor(newImg, cv2.COLOR_BGR2GRAY)
 
-  #  x = imread("theimage.png", mode='L')
-  #  x = np.invert(x)
-  #  x = imresize(x, (28,28))
+        grayScaleArray = np.array(grayScaleImage, dtype=np.float32).reshape(1, 784)
+        grayScaleArray /= 255
 
-  #  x = x.reshape(1, 28, 28, 1)
-  #  with graph.as_default():
-  #      out = models.predict(x)
-  #      print(out)
-  #      print(np.argmax(out, axis=1))
-  #      response = np.array_str(np.argmax(out, axis=1))
-  #      return response
-  #      return {"message": theimage}
+        setPrediction = model.predict(grayScaleArray)
+        getPrediction = np.array(setPrediction[0])
 
-  #  def parseImg(imgData):
-  #      imgstr = re.search(b'base64,(.*)', imgData).group(1)
-  #      with open('theimage.png', 'wb') as output:
-  #          output.write(base64.decodebytes(imgstr))
+        predictNum = str(np.argmax(getPrediction))
+        print(predictNum)
+
+        return predictNum
+
+   
 
 if __name__ == "__main__":
     app.run
