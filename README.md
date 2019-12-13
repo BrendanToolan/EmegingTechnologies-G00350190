@@ -1,4 +1,4 @@
-Brendan Toolan G00350190 - Emerging Technologies Project 2019 
+<h1> Brendan Toolan G00350190 - Emerging Technologies Project 2019 </h1>
 
 Ubuntu commands for running web app
     export FLASK_APP=WebApp/webApp.py
